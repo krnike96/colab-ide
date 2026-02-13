@@ -6,9 +6,11 @@ import Preview from './components/Editor/Preview';
 function App() {
   const [code, setCode] = useState('document.getElementById("root").innerHTML = "<h1>Hello!</h1>";');
   const [compiledCode, setCompiledCode] = useState('');
+  const [runId, setRunId] = useState(0);
 
   const handleRun = () => {
-    setCompiledCode(code); // This triggers the Preview update
+    setCompiledCode(code);
+    setRunId(prev => prev + 1);
   };
 
   return (
@@ -21,8 +23,8 @@ function App() {
         </div>
 
         <div className="w-[40%] bg-white border-l border-white/10 hidden md:block">
-          {compiledCode ? (
-            <Preview code={compiledCode} />
+          {runId > 0 ? (
+            <Preview key={runId} code={compiledCode} />
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-gray-400 bg-[#121212]">
               <p className="italic text-sm">Write some JS to manipulate the DOM</p>
